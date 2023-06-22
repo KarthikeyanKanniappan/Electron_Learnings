@@ -5,4 +5,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getData: (cb) => ipcRenderer.on("item-success", cb),
   takeScreen: (call) => ipcRenderer.on("capture-screenshot", call),
   command: (callback) => ipcRenderer.on("full-screen", callback),
+  // toMain:(text) => ipcRenderer.send("newScreenShot", text)
 });

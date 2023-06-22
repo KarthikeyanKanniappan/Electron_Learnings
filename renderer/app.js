@@ -13,7 +13,7 @@ window.electronAPI.getData((event, value) => {
 
 window.addEventListener("DOMContentLoaded", () => {
   window.electronAPI.command((event, value) => {
-    // console.log(value);
+    console.log(value);
     //   const blob = new Blob([value], { type: "image/png" });
     //   const url = URL.createObjectURL(blob);
     //   console.log(url);
