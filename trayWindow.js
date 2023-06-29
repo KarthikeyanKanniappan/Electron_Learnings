@@ -7,6 +7,7 @@ const {
   Menu,
   desktopCapturer,
   systemPreferences,
+  Notification,
 } = require("electron");
 const path = require("path");
 
@@ -33,6 +34,16 @@ const createtrayWindow = (valueX, valueY) => {
   return win;
   //   win.webContents.openDevTools({ mode: "detach" });
 };
+
+app.whenReady().then(() => {
+  ipcMain.on("close", (event, value) => {
+    if (value === "close") {
+      win.close();
+    }
+  });
+  win.restore();
+  win.focus();
+});
 
 module.exports = {
   createtrayWindow,
