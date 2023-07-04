@@ -8,14 +8,17 @@ const {
   desktopCapturer,
   systemPreferences,
   Notification,
+  shell,
 } = require("electron");
+// const { shell } = require('electron');
 const path = require("path");
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
 const fs = require("fs");
-
 const windowStateKeeper = require("electron-window-state");
 const { createOffscreenWindow } = require("./readItem.js");
 const { createtrayWindow } = require("./trayWindow.js");
+// const { showNotification } = require("./notification.js");
+
 let secondaryWindow = false;
 let win, tray, final;
 
@@ -78,6 +81,23 @@ function createTray() {
   });
 }
 
+function getIconPath() {
+  const iconPath = "/Users/user/Documents/3.Electron/mySnapIcon.icns";
+  const notificationScript = `
+  osascript -e display notification "Notification Body" with title "Notification Title" giving up after 5 with icon POSIX file "${iconPath}"
+    `;
+  // 'display notification "hello world!"'
+  //
+  console.log(notificationScript);
+  exec(notificationScript, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing AppleScript: ${error}`);
+      return;
+    }
+    console.log(`AppleScript executed successfully: ${stdout}`);
+  });
+}
+
 const createWindow = () => {
   // Window state Keeper
   let state = windowStateKeeper({
@@ -133,14 +153,19 @@ app.whenReady().then(() => {
 
   //Notification for ScreenShot
   ipcMain.on("show-notification", (event, { title, body }) => {
-    const iconImage = nativeImage.createFromPath(
-      "/Users/user/Documents/3.Electron/mySnapIcon.png"
-    );
-    const iconSize = { width: 125, height: 125 };
-    const resizedIcon = iconImage.resize(iconSize);
-    win.setIcon(resizedIcon);
-    const notification = new Notification({ title, body, icon: resizedIcon });
-    notification.show();
+    // const iconImage = nativeImage.createFromPath(
+    //   "/Users/user/Documents/3.Electron/mySnapIcon.png"
+    // );
+    // const iconSize = { width: 125, height: 125 };
+    // const resizedIcon = iconImage.resize(iconSize);
+    // const notification = new Notification({ title, body, icon: resizedIcon });
+    // notification.show();
+    getIconPath();
+    // showNotification(
+    //   "mysnap",
+    //   "Screen shot taken",
+    //   "/Users/user/Documents/3.Electron/mySnapIcon.icns"
+    // );
   });
 
   // ipcMain.send("full-screen", dataImage);

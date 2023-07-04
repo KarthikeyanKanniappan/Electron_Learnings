@@ -17,7 +17,9 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.0",
-    "electron-window-state": "^5.0.3"
+    "electron-window-state": "^5.0.3",
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3"
   },
   "build": {
     "appId": "com.karthikeyanKanniappan.minisnap",
